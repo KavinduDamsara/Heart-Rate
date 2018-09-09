@@ -41,7 +41,7 @@ public class LogIn_Firebase extends AppCompatActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_emailpassword);
+        setContentView(R.layout.activity_log_in__firebase);
 
         // Views
         mStatusTextView = findViewById(R.id.status);
