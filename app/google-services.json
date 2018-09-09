@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "715641548102-0fmqthn1hnfssbn9a7g8125h7lkbh6cv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.heartratemonitor",
+            "certificate_hash": "7a7752929be042aa39af65a0c67b380256d0c097"
+          }
+        },
+        {
           "client_id": "715641548102-foc7emgtehhljg23agsnojtd2dpigvpp.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715641548102-foc7emgtehhljg23agsnojtd2dpigvpp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
