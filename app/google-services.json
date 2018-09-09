@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "715641548102",
+    "firebase_url": "https://heart-rate-monitor-74495.firebaseio.com",
+    "project_id": "heart-rate-monitor-74495",
+    "storage_bucket": "heart-rate-monitor-74495.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715641548102:android:10d1b89b583e2def",
+        "android_client_info": {
+          "package_name": "com.example.user.heartratemonitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715641548102-foc7emgtehhljg23agsnojtd2dpigvpp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5qqMUViODDpVeHrayp9gt_hw6PCFqYhU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
