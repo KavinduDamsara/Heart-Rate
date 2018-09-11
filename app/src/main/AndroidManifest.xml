@@ -27,14 +27,20 @@
         <activity
             android:name=".LogIn_Firebase"
             android:label="@string/title_activity_log_in__firebase"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <!--for messanging service-->
-        <!--<service
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- for messanging service -->
+        <!--
+        <service
             android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </service>-->
+        </service>
+        -->
+        <activity
+            android:name=".DashBoard"
+            android:label="@string/title_activity_dash_board"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
