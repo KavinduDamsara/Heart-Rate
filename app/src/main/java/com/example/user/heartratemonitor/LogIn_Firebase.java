@@ -1,5 +1,6 @@
 package com.example.user.heartratemonitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -67,6 +68,9 @@ public class LogIn_Firebase extends AppCompatActivity implements
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
+        if(currentUser != null){
+            goToDashBoard();
+        }
     }
     // [END on_start_check_user]
 
@@ -88,6 +92,7 @@ public class LogIn_Firebase extends AppCompatActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            goToDashBoard();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -122,6 +127,7 @@ public class LogIn_Firebase extends AppCompatActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            goToDashBoard();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -233,5 +239,9 @@ public class LogIn_Firebase extends AppCompatActivity implements
         } else if (i == R.id.verify_email_button) {
             sendEmailVerification();
         }
+    }
+    public void goToDashBoard(){
+        Intent myIntent = new Intent(getBaseContext(),   NavActivity.class);
+        startActivity(myIntent);
     }
 }
