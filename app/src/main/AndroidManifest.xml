@@ -51,6 +51,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".UserAction"></activity>
+        <service
+            android:name=".ActivityRecognizedService"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.ActivityRecognition;
+import com.google.android.gms.location.ActivityRecognitionClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class UserAction extends AppCompatActivity implements
     private List<ActivityRecPoint> activityRecPoints = new ArrayList<>();
     private Button mStartBtn;
     private Button mStopBtn;
+    private Button mCheckBtn;
     private TextView mActivityType;
     private TextView mConfidenceLevel;
     private TextView mStatus;
@@ -43,6 +45,8 @@ public class UserAction extends AppCompatActivity implements
     private static final long UPDATE_INTERVAL = 1000;
     private GoogleApiClient mClient;
 
+    //private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,24 @@ public class UserAction extends AppCompatActivity implements
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,
                 new IntentFilter(Constants.INTENT_FILTER));
 
+        /*activityRecPoints.add(
+                new ActivityTransition.Builder()
+                        .setActivityType(DetectedActivity.IN_VEHICLE)
+                        .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                        .build());
+
+        activityRecPoints.add(
+                new ActivityTransition.Builder()
+                        .setActivityType(DetectedActivity.IN_VEHICLE)
+                        .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                        .build());
+
+        activityRecPoints.add(
+                new ActivityTransition.Builder()
+                        .setActivityType(DetectedActivity.WALKING)
+                        .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                        .build());
+*/
         mClient = new GoogleApiClient.Builder(this)
                 .addApiIfAvailable(ActivityRecognition.API)
                 .addConnectionCallbacks(this)
@@ -58,9 +80,13 @@ public class UserAction extends AppCompatActivity implements
                 .build();
         mClient.connect();
 
+        /*ActivityRecognitionClient activityRecognitionClient = ActivityRecognition.getClient(this);
+        Task task = activityRecognitionClient.requestActivityUpdates(180_000L, pendingIntent);
+*/
 
         mStartBtn = (Button)findViewById(R.id.startBtn);
         mStopBtn = (Button)findViewById(R.id.stopBtn);
+        mCheckBtn = (Button)findViewById(R.id.checkBtn);
         mActivityType = (TextView)findViewById(R.id.activityTypes);
         mConfidenceLevel = (TextView)findViewById(R.id.confidence);
         mStatus = (TextView)findViewById(R.id.status);
@@ -91,6 +117,15 @@ public class UserAction extends AppCompatActivity implements
             }
         });
 
+        mCheckBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                //Toast.makeText(UserAction.this,"Checked",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 //    @Override
@@ -105,6 +140,7 @@ public class UserAction extends AppCompatActivity implements
         Intent intent = new Intent(this,ActivityRecognizedService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mClient,UPDATE_INTERVAL, pendingIntent);
+
     }
 
     @Override

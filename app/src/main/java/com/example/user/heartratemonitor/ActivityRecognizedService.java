@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityRecognizedService extends IntentService{
+
     private LocalBroadcastManager mLocalBroadcastManager;
     private List<ActivityRecPoint> activityRecPoints;
 
@@ -21,7 +22,13 @@ public class ActivityRecognizedService extends IntentService{
         activityRecPoints = new ArrayList<>();
         super.onCreate();
     }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, startId, startId);
+        Log.i("LocalService", "Received start id " + startId + ": " + intent);
 
+        return START_STICKY;
+    }
     public ActivityRecognizedService() {
         super("ActivityRecognizedService");
     }
