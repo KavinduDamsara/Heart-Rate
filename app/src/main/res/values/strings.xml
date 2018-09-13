@@ -110,6 +110,28 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_signout">Sign Out</string>
     <string name="action_verifyemail">Send verification email</string>
+    <string name="bluetooth_health_profile_not_available">bluetooth_health_profile_not_available</string>
+    <string name="select_device" />
+    <string name="ok" />
+    <string name="app_registration" />
+    <string name="register" />
+    <string name="unregister">unregister</string>
+    <string name="channel_connection">channel connection</string>
+    <string name="channel_connection_desc">channel connection desc</string>
+    <string name="connect">connect</string>
+    <string name="connection_state">connection state</string>
+    <string name="disconnected">disconnected</string>
+    <string name="data_ind">data ind</string>
+    <string name="status_msg">status msg</string>
+    <string name="empty">empty</string>
+    <string name="connected">connected</string>
+    <string name="status_create_channel">atus create channel</string>
+    <string name="status_destroy_channel">status destoy channel</string>
+    <string name="read_data_done">read data done</string>
+    <string name="read_data">read data</string>
+    <string name="status_unreg">status unregister</string>
+    <string name="status_reg">status register</string>
+    <string name="bluetooth_not_available">bluetooth not available</string>
 
     <!--firebase auth-->
 </resources>

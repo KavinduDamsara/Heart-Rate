@@ -102,7 +102,7 @@ public class NavActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             startActivity(new Intent(getApplicationContext(),UserAction.class));
         } else if (id == R.id.nav_gallery) {
-
+            startActivity(new Intent(getApplicationContext(),BluetoothHDPActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
