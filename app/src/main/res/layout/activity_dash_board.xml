@@ -30,7 +30,8 @@
 
     <include
         layout="@layout/content_dash_board"
-        android:layout_height="485dp" />
+        android:layout_height="485dp"
+        android:layout_width="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

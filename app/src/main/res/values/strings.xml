@@ -132,6 +132,7 @@
     <string name="status_unreg">status unregister</string>
     <string name="status_reg">status register</string>
     <string name="bluetooth_not_available">bluetooth not available</string>
+    <string name="none_paired">none paired</string>
 
     <!--firebase auth-->
 </resources>

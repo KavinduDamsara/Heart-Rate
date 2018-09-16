@@ -251,5 +251,8 @@ public class BluetoothHDPService extends Service {
         }
     }
 
-
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
+    }
 }
