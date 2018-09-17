@@ -38,7 +38,7 @@ public class CombinedActivity extends AppCompatActivity {
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),UserAction.class));
+                //startActivity(new Intent(getApplicationContext(),UserAction.class));
                 startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
             }
         });

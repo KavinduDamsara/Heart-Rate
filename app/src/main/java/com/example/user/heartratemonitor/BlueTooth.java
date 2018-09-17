@@ -1,24 +1,40 @@
 package com.example.user.heartratemonitor;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.ActivityRecognition;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-public class BlueTooth extends Activity {
+public class BlueTooth extends Activity implements
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
 
     Button btnOn, btnOff;
@@ -87,6 +103,64 @@ public class BlueTooth extends Activity {
             }
         };
 
+        //setContentView(R.layout.activity_combined);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,
+                new IntentFilter(Constants.INTENT_FILTER));
+
+        mClient = new GoogleApiClient.Builder(this)
+                .addApiIfAvailable(ActivityRecognition.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        mClient.connect();
+
+        /*ActivityRecognitionClient activityRecognitionClient = ActivityRecognition.getClient(this);
+        Task task = activityRecognitionClient.requestActivityUpdates(180_000L, pendingIntent);
+*/
+
+        mStartBtn = (Button)findViewById(R.id.startBtn);
+        mStopBtn = (Button)findViewById(R.id.stopBtn);
+        mCheckBtn = (Button)findViewById(R.id.checkBtn);
+        mActivityType = (TextView)findViewById(R.id.activityTypes);
+        mConfidenceLevel = (TextView)findViewById(R.id.confidence);
+        mStatus = (TextView)findViewById(R.id.status);
+        mPastActivities = (TextView)findViewById(R.id.pastActivities);
+
+
+        mStopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClient.disconnect();
+                LocalBroadcastManager.getInstance(BlueTooth.this).unregisterReceiver(mBroadcastReceiver);
+                mStatus.setText("Status: stopped");
+                Toast.makeText(BlueTooth.this,"Stopped",Toast.LENGTH_SHORT).show();
+                activityRecPoints.clear();
+                //mActivityType.setText("--");
+                //mConfidenceLevel.setText("--");
+            }
+        });
+
+        mStartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClient.connect();
+                LocalBroadcastManager.getInstance(BlueTooth.this).registerReceiver(mBroadcastReceiver,
+                        new IntentFilter(Constants.INTENT_FILTER));
+
+                Toast.makeText(BlueTooth.this,"Started",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mCheckBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Toast.makeText(BlueTooth.this,"Checked",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
@@ -149,8 +223,8 @@ public class BlueTooth extends Activity {
         mConnectedThread.start();
 
 
-        userActionThread = new UserActionThread(btSocket);
-        userActionThread.start();
+        //userActionThread = new UserActionThread(btSocket);
+       // userActionThread.start();
       //  userActionThread.write("x");
 
         //I send a character when resuming.beginning transmission to check device is connected
@@ -277,4 +351,79 @@ public class BlueTooth extends Activity {
             Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
         }
     }
+
+    //bluetooto starts
+
+    private List<ActivityRecPoint> activityRecPoints = new ArrayList<>();
+    private Button mStartBtn;
+    private Button mStopBtn;
+    private Button mCheckBtn;
+    private TextView mActivityType;
+    private TextView mConfidenceLevel;
+    private TextView mStatus;
+    private TextView mPastActivities;
+
+    private static final int REQUEST_CODE = 0;
+    // every 3 minutes
+    private static final long UPDATE_INTERVAL = 1000;
+    private GoogleApiClient mClient;
+
+    //private Intent intent;
+
+
+
+//    @Override
+//    protected void onResume() {
+//        Toast.makeText(MainActivity.this,"Started",Toast.LENGTH_SHORT).show();
+//        super.onResume();
+//    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        logThis("OnConnected");
+        Intent intent = new Intent(this,ActivityRecognizedService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mClient,UPDATE_INTERVAL, pendingIntent);
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        logThis("onConnectionSuspended");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        logThis("onConnectionFailed");
+    }
+
+    private void logThis(String s){
+        Log.d(MainActivity.class.getSimpleName(),s);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        mClient.disconnect();
+        LocalBroadcastManager.getInstance(BlueTooth.this).unregisterReceiver(mBroadcastReceiver);
+        Toast.makeText(BlueTooth.this,"Activity Recognition Stopped!",Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra(Constants.MESSAGE_KEY);
+            mActivityType.setText(message);
+            mConfidenceLevel.setText("" + intent.getIntExtra(Constants.CONFIDENCE_KEY,0));
+            mStatus.setText("Status: Receiving updates");
+
+            ActivityRecPoint receivedPoint = (ActivityRecPoint) intent.getSerializableExtra(Constants.LIST_ITEM_KEY);
+            activityRecPoints.add(receivedPoint);
+
+            mPastActivities.setText(activityRecPoints.toString());
+            logThis("Got message: " + message);
+            logThis("List size:"+activityRecPoints.size());
+        }
+    };
 }
