@@ -102,11 +102,11 @@ public class NavActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             startActivity(new Intent(getApplicationContext(),UserAction.class));
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(getApplicationContext(),BluetoothHDPActivity.class));
+            //startActivity(new Intent(getApplicationContext(),BluetoothHDPActivity.class));
         } else if (id == R.id.nav_slideshow) {
-            startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
+            //startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
         } else if (id == R.id.nav_manage) {
-
+            startActivity(new Intent(getApplicationContext(),CombinedActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

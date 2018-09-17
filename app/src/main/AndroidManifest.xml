@@ -68,7 +68,8 @@
             android:exported="false" />
 
         <activity android:name=".DeviceListActivity" />
-        <activity android:name=".BlueTooth"></activity>
+        <activity android:name=".BlueTooth" />
+        <activity android:name=".CombinedActivity"></activity>
     </application>
 
 </manifest>

@@ -50,7 +50,9 @@ public class UserAction extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_action);
+        //when we have a combined view comment this
+        //setContentView(R.layout.activity_user_action);
+        setContentView(R.layout.activity_combined);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver,
                 new IntentFilter(Constants.INTENT_FILTER));
@@ -122,7 +124,7 @@ public class UserAction extends AppCompatActivity implements
             public void onClick(View view) {
 
 
-                //Toast.makeText(UserAction.this,"Checked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserAction.this,"Checked",Toast.LENGTH_SHORT).show();
             }
         });
 

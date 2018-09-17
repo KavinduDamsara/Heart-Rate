@@ -31,6 +31,7 @@ public class BlueTooth extends Activity {
     private StringBuilder recDataString = new StringBuilder();
 
     private ConnectedThread mConnectedThread;
+    private UserActionThread userActionThread;
 
     // SPP UUID service - this should work for most devices
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -42,7 +43,7 @@ public class BlueTooth extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_blue_tooth);
+        setContentView(R.layout.activity_combined);
 
         //Link the buttons and textViews to respective views
         btnOn = (Button) findViewById(R.id.buttonOn);
@@ -147,6 +148,11 @@ public class BlueTooth extends Activity {
         mConnectedThread = new ConnectedThread(btSocket);
         mConnectedThread.start();
 
+
+        userActionThread = new UserActionThread(btSocket);
+        userActionThread.start();
+      //  userActionThread.write("x");
+
         //I send a character when resuming.beginning transmission to check device is connected
         //If it is not an exception will be thrown in the write method and finish() will be called
         mConnectedThread.write("x");
@@ -227,6 +233,48 @@ public class BlueTooth extends Activity {
                 finish();
 
             }
+        }
+    }
+
+    private class UserActionThread extends Thread {
+        /*private final InputStream mmInStream;
+        private final OutputStream mmOutStream;
+*/
+        //creation of the connect thread
+        public UserActionThread(BluetoothSocket socket) {
+//            InputStream tmpIn = null;
+//            OutputStream tmpOut = null;
+//
+//            try {
+//                //Create I/O streams for connection
+//                tmpIn = socket.getInputStream();
+//                tmpOut = socket.getOutputStream();
+//            } catch (IOException e) { }
+//
+//            mmInStream = tmpIn;
+//            mmOutStream = tmpOut;
+        }
+
+
+        public void run() {
+            /*byte[] buffer = new byte[256];
+            int bytes;*/
+
+            // Keep looping to listen for received messages
+            while (true) {
+
+                    /*bytes = mmInStream.read(buffer);        	//read bytes from input buffer
+                    String readMessage = new String(buffer, 0, bytes);*/
+                    // Send the obtained bytes to the UI Activity via handler
+                    //bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
+//                    Toast.makeText(getBaseContext(), "ok", Toast.LENGTH_LONG).show();
+
+            }
+        }
+        //write method
+        public void write(String input) {
+            byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
+            Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
         }
     }
 }

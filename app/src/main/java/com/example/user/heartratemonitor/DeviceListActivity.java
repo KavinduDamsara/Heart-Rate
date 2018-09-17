@@ -37,7 +37,9 @@ public class DeviceListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //when we have a combined view comment this
         setContentView(R.layout.activity_device_list);
+
     }
 
     @Override
