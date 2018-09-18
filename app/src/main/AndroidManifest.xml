@@ -51,21 +51,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BluetoothHDPActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".UserAction" />
 
         <service
             android:name=".ActivityRecognizedService"
             android:exported="false" />
-        <service
-            android:name=".BluetoothHDPService"
-            android:exported="false" />
+
 
         <activity android:name=".DeviceListActivity" />
         <activity android:name=".BlueTooth" />
