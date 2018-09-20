@@ -133,6 +133,7 @@
     <string name="status_reg">status register</string>
     <string name="bluetooth_not_available">bluetooth not available</string>
     <string name="none_paired">none paired</string>
+    <string name="heart_rate_monitor">Heart Rate Monitor</string>
 
     <!--firebase auth-->
 </resources>

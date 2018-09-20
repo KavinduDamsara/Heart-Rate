@@ -117,9 +117,9 @@ public class NavActivity extends AppCompatActivity
                     int endOfLineIndex = recDataString.indexOf("~");                    // determine the end-of-line
                     if (endOfLineIndex > 0) {                                           // make sure there data before ~
                         String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
-                        txtString.setText("Data Received = " + dataInPrint);
+                        //txtString.setText("Data Received = " + dataInPrint);
                         int dataLength = dataInPrint.length();							//get length of data received
-                        txtStringLength.setText("String Length = " + String.valueOf(dataLength));
+                        //txtStringLength.setText("String Length = " + String.valueOf(dataLength));
 
                         if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
                         {
@@ -128,7 +128,7 @@ public class NavActivity extends AppCompatActivity
 //                            String sensor2 = recDataString.substring(11, 15);
 //                            String sensor3 = recDataString.substring(16, 20);
 
-                            sensorView0.setText(" Heart Rate " + sensor0 + "BPM");	//update the textviews with sensor values
+                            sensorView0.setText( sensor0 + "BPM");	//update the textviews with sensor values
 //                            sensorView1.setText(" Sensor 1 Voltage = " + sensor1 + "V");
 //                            sensorView2.setText(" Sensor 2 Voltage = " + sensor2 + "V");
 //                            sensorView3.setText(" Sensor 3 Voltage = " + sensor3 + "V");
@@ -157,16 +157,16 @@ public class NavActivity extends AppCompatActivity
         Task task = activityRecognitionClient.requestActivityUpdates(180_000L, pendingIntent);
 */
 
-        mStartBtn = (Button)findViewById(R.id.startBtn);
+        /*mStartBtn = (Button)findViewById(R.id.startBtn);
         mStopBtn = (Button)findViewById(R.id.stopBtn);
-        mCheckBtn = (Button)findViewById(R.id.checkBtn);
+        mCheckBtn = (Button)findViewById(R.id.checkBtn);*/
         mActivityType = (TextView)findViewById(R.id.activityTypes);
         mConfidenceLevel = (TextView)findViewById(R.id.confidence);
         mStatus = (TextView)findViewById(R.id.status);
         mPastActivities = (TextView)findViewById(R.id.pastActivities);
 
 
-        mStopBtn.setOnClickListener(new View.OnClickListener() {
+       /* mStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mClient.disconnect();
@@ -177,9 +177,9 @@ public class NavActivity extends AppCompatActivity
                 //mActivityType.setText("--");
                 //mConfidenceLevel.setText("--");
             }
-        });
+        });*/
 
-        mStartBtn.setOnClickListener(new View.OnClickListener() {
+       /* mStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mClient.connect();
@@ -197,14 +197,14 @@ public class NavActivity extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
                 Toast.makeText(NavActivity.this,"Checked",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
 
         // Set up onClick listeners for buttons to send 1 or 0 to turn on/off LED
-        btnOff.setOnClickListener(new View.OnClickListener() {
+        /*btnOff.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mConnectedThread.write("0");    // Send "0" via Bluetooth
                 Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
@@ -216,7 +216,7 @@ public class NavActivity extends AppCompatActivity
                 mConnectedThread.write("1");    // Send "1" via Bluetooth
                 Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         //from combined
     }
 
@@ -272,10 +272,15 @@ public class NavActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            startActivity(new Intent(getApplicationContext(),UserAction.class));
+            startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
+            Toast.makeText(NavActivity.this,"Checked",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
-            //startActivity(new Intent(getApplicationContext(),BluetoothHDPActivity.class));
-        } else if (id == R.id.nav_slideshow) {
+            mClient.connect();
+            LocalBroadcastManager.getInstance(NavActivity.this).registerReceiver(mBroadcastReceiver,
+                    new IntentFilter(Constants.INTENT_FILTER));
+
+            Toast.makeText(NavActivity.this,"Started",Toast.LENGTH_SHORT).show();
+        } /*else if (id == R.id.nav_slideshow) {
             //startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
         } else if (id == R.id.nav_manage) {
             startActivity(new Intent(getApplicationContext(),CombinedActivity.class));
@@ -283,7 +288,7 @@ public class NavActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
