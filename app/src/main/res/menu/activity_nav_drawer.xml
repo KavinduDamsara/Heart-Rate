@@ -12,11 +12,11 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/action"
             android:title="Start user action tracking" />
-       <!-- <item
-            android:id="@+id/nav_slideshow"
+        <item
+            android:id="@+id/nav_user_details"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Slideshow" />
-        <item
+        <!--<item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Tools" />-->

@@ -31,7 +31,7 @@
         android:id="@+id/infoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="If no devices are listed please pair your device in Android settings"
+        android:text="If your device not appearrs, please pair it in Android settings"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout

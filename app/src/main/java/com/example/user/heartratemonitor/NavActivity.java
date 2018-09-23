@@ -1,5 +1,6 @@
 package com.example.user.heartratemonitor;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -70,6 +71,7 @@ public class NavActivity extends AppCompatActivity
     private static String address;
     //from combined
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -280,9 +282,10 @@ public class NavActivity extends AppCompatActivity
                     new IntentFilter(Constants.INTENT_FILTER));
 
             Toast.makeText(NavActivity.this,"Started",Toast.LENGTH_SHORT).show();
-        } /*else if (id == R.id.nav_slideshow) {
-            //startActivity(new Intent(getApplicationContext(),DeviceListActivity.class));
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_user_details) {
+            startActivity(new Intent(getApplicationContext(),UpdateUserProfile.class));
+            Toast.makeText(NavActivity.this,"Add user details",Toast.LENGTH_SHORT).show();
+        }/* else if (id == R.id.nav_manage) {
             startActivity(new Intent(getApplicationContext(),CombinedActivity.class));
         } else if (id == R.id.nav_share) {
 
