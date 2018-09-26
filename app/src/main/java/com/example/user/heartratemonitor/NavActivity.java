@@ -6,11 +6,14 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -53,7 +56,7 @@ public class NavActivity extends AppCompatActivity
 
     //from combined
     Button btnOn, btnOff;
-    TextView txtArduino, txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3;
+    TextView txtArduino, txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3, results;
     Handler bluetoothIn;
 
     final int handlerState = 0;        				 //used to identify handler message
@@ -70,6 +73,7 @@ public class NavActivity extends AppCompatActivity
     // String for MAC address
     private static String address;
     //from combined
+    private AnalyzingService analyzingSer = new AnalyzingService("analyzingSer");
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -111,6 +115,8 @@ public class NavActivity extends AppCompatActivity
         sensorView2 = (TextView) findViewById(R.id.sensorView2);
         sensorView3 = (TextView) findViewById(R.id.sensorView3);
 
+        results = (TextView) findViewById(R.id.results);
+
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (msg.what == handlerState) {										//if message is what we want
@@ -125,16 +131,25 @@ public class NavActivity extends AppCompatActivity
 
                         if (recDataString.charAt(0) == '#')								//if it starts with # we know it is what we are looking for
                         {
-                            String sensor0 = dataInPrint;          //get sensor value from string between indices 1-5
+                            String BPM = dataInPrint;          //get sensor value from string between indices 1-5
 //                            String sensor1 = recDataString.substring(6, 10);            //same again...
 //                            String sensor2 = recDataString.substring(11, 15);
 //                            String sensor3 = recDataString.substring(16, 20);
 
-                            sensorView0.setText( sensor0 + "BPM");	//update the textviews with sensor values
+                            sensorView0.setText( BPM + "BPM");	//update the textviews with sensor values
 //                            sensorView1.setText(" Sensor 1 Voltage = " + sensor1 + "V");
 //                            sensorView2.setText(" Sensor 2 Voltage = " + sensor2 + "V");
 //                            sensorView3.setText(" Sensor 3 Voltage = " + sensor3 + "V");
                         }
+                        //HeartRateResults BPMres = analyzeService.getClass(Integer.parseInt(dataInPrint));
+                        HeartRateResults BPMres = analyzingSer.analyze((int)Float.parseFloat(dataInPrint.substring(1)));
+                        if(BPMres != null){
+                            results.setText("At risk");
+                        }
+                        else {
+                            results.setText("No risk");
+                        }
+
                         recDataString.delete(0, recDataString.length()); 					//clear all string data
                         // strIncom =" ";
                         dataInPrint = " ";
@@ -528,6 +543,28 @@ public class NavActivity extends AppCompatActivity
 
     //private Intent intent;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent mIntent = new Intent(this, AnalyzingService.class);
+        bindService(mIntent, analyzeService, BIND_AUTO_CREATE);
+    }
+
+    ServiceConnection analyzeService = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //Toast.makeText(NavActivity.this, "Service is disconnected", 1000).show();
+
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //Toast.makeText(NavActivity.this, "Service is connected", 1000).show();
+            /*mBounded = true;
+            LocalBinder mLocalBinder = (LocalBinder)service;
+            mServer = mLocalBinder.getServerInstance();*/
+        }
+    };
 
 
 //    @Override
@@ -542,6 +579,10 @@ public class NavActivity extends AppCompatActivity
         Intent intent = new Intent(this,ActivityRecognizedService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mClient,UPDATE_INTERVAL, pendingIntent);
+
+        //Intent intentAnalyze = new Intent(this,AnalyzingService.class);
+        //PendingIntent pendingIntent = PendingIntent.getService(this, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mClient,UPDATE_INTERVAL, pendingIntent);
 
     }
 

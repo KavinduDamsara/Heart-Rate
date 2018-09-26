@@ -14,8 +14,8 @@
             android:title="Start user action tracking" />
         <item
             android:id="@+id/nav_user_details"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@drawable/user_det"
+            android:title="User Details" />
         <!--<item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
