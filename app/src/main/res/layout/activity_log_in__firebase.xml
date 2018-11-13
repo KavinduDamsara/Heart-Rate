@@ -23,13 +23,6 @@
             android:contentDescription="@string/desc_firebase_lockup"
             android:src="@drawable/login_hr" />
         <!--android:src="@drawable/firebase_lockup_400"-->
-        <TextView
-            android:id="@+id/title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/title_bottom_margin"
-            android:text="@string/emailpassword_title_text"
-            android:theme="@style/ThemeOverlay.MyTitleText" />
 
         <TextView
             android:id="@+id/status"
@@ -38,8 +31,7 @@
 
         <TextView
             android:id="@+id/detail"
-            style="@style/ThemeOverlay.MyTextDetail"
-            tools:text="Firebase User ID: 123456789abc" />
+            style="@style/ThemeOverlay.MyTextDetail" />
 
     </LinearLayout>
 
