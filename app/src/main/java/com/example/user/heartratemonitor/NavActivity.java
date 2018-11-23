@@ -30,6 +30,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class NavActivity extends AppCompatActivity
 
     //from combined
     Button btnOn, btnOff;
-    TextView txtArduino, txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3, results;
+    TextView txtArduino, txtString, txtStringLength, heartRate, sensorView1, sensorView2, sensorView3, results;
     Handler bluetoothIn;
 
     final int handlerState = 0;        				 //used to identify handler message
@@ -110,10 +111,11 @@ public class NavActivity extends AppCompatActivity
         btnOff = (Button) findViewById(R.id.buttonOff);
         txtString = (TextView) findViewById(R.id.txtString);
         txtStringLength = (TextView) findViewById(R.id.testView1);
-        sensorView0 = (TextView) findViewById(R.id.sensorView0);
+        heartRate = (TextView) findViewById(R.id.heartRate);
         sensorView1 = (TextView) findViewById(R.id.sensorView1);
         sensorView2 = (TextView) findViewById(R.id.sensorView2);
         sensorView3 = (TextView) findViewById(R.id.sensorView3);
+        activityTypeImg = (ImageView) findViewById(R.id.activityTypeImg);
 
         results = (TextView) findViewById(R.id.results);
 
@@ -136,7 +138,7 @@ public class NavActivity extends AppCompatActivity
 //                            String sensor2 = recDataString.substring(11, 15);
 //                            String sensor3 = recDataString.substring(16, 20);
 
-                            sensorView0.setText( BPM + "BPM");	//update the textviews with sensor values
+                            heartRate.setText( BPM + "BPM");	//update the textviews with sensor values
 //                            sensorView1.setText(" Sensor 1 Voltage = " + sensor1 + "V");
 //                            sensorView2.setText(" Sensor 2 Voltage = " + sensor2 + "V");
 //                            sensorView3.setText(" Sensor 3 Voltage = " + sensor3 + "V");
@@ -179,8 +181,12 @@ public class NavActivity extends AppCompatActivity
         mCheckBtn = (Button)findViewById(R.id.checkBtn);*/
         mActivityType = (TextView)findViewById(R.id.activityTypes);
         mConfidenceLevel = (TextView)findViewById(R.id.confidence);
-        mStatus = (TextView)findViewById(R.id.status);
+        //mStatus = (TextView)findViewById(R.id.status);
         mPastActivities = (TextView)findViewById(R.id.pastActivities);
+
+        //main view components
+        activityTypeImg = (ImageView)findViewById(R.id.activityTypeImg);
+        //main view components end
 
 
        /* mStopBtn.setOnClickListener(new View.OnClickListener() {
@@ -541,6 +547,10 @@ public class NavActivity extends AppCompatActivity
     private static final long UPDATE_INTERVAL = 1000;
     private GoogleApiClient mClient;
 
+    //main view components
+    private ImageView activityTypeImg;
+    //main view components end
+
     //private Intent intent;
 
     @Override
@@ -615,7 +625,8 @@ public class NavActivity extends AppCompatActivity
             String message = intent.getStringExtra(Constants.MESSAGE_KEY);
             mActivityType.setText(message);
             mConfidenceLevel.setText("" + intent.getIntExtra(Constants.CONFIDENCE_KEY,0));
-            mStatus.setText("Status: Receiving updates");
+            //mStatus.setText("Status: Receiving updates");
+            setActivity(message);
 
             ActivityRecPoint receivedPoint = (ActivityRecPoint) intent.getSerializableExtra(Constants.LIST_ITEM_KEY);
             activityRecPoints.add(receivedPoint);
@@ -625,5 +636,36 @@ public class NavActivity extends AppCompatActivity
             logThis("List size:"+activityRecPoints.size());
         }
     };
+
+    public void setActivity(String message){
+
+        if(message.equals("Running")){
+            activityTypeImg.setImageResource(R.drawable.running);
+        }
+        else if(message.equals("In Vehicle")){
+            activityTypeImg.setImageResource(R.drawable.vehicle);
+        }
+        else if(message.equals("On Bicycle")){
+            activityTypeImg.setImageResource(R.drawable.on_bicycle);
+        }
+        else if(message.equals("On Foot")){
+            activityTypeImg.setImageResource(R.drawable.on_foot);
+        }
+        else if(message.equals("Still")){
+            activityTypeImg.setImageResource(R.drawable.still);
+        }
+        else if(message.equals("Tilting")){
+            activityTypeImg.setImageResource(R.drawable.tilting);
+        }
+        else if(message.equals("Walking")){
+            activityTypeImg.setImageResource(R.drawable.on_foot);
+        }
+        else {
+            activityTypeImg.setImageResource(R.drawable.loading);
+        }
+
+
+
+    }
 
 }

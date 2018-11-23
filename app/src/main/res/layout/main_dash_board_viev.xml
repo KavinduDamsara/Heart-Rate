@@ -48,7 +48,7 @@
         tools:fontFamily="casual" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/userActionImg"
         android:layout_width="115dp"
         android:layout_height="69dp"
         android:layout_marginBottom="8dp"

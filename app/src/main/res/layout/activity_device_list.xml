@@ -12,8 +12,7 @@
         android:visibility="gone"
         android:background="#666"
         android:textColor="#fff"
-        android:paddingLeft="5dp"
-        />
+        android:paddingLeft="5dp" />
     <ListView android:id="@+id/paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

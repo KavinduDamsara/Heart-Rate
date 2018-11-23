@@ -62,16 +62,19 @@ public class UpdateUserProfile extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserDetails userDetails = dataSnapshot.getValue(UserDetails.class);
                 //System.out.println(userDetails);
-                firstNameField.setText(userDetails.firstName);
-                lastNameField.setText(userDetails.lastName);
-                if(userDetails.gender.equals("Male")){
-                    genderGroupField.check(R.id.male);
+                if(userDetails != null){
+                    firstNameField.setText(userDetails.firstName);
+                    lastNameField.setText(userDetails.lastName);
+                    if(userDetails.gender.equals("Male")){
+                        genderGroupField.check(R.id.male);
+                    }
+                    else {
+                        genderGroupField.check(R.id.female);
+                    }
+                    ageField.setText(String.valueOf(userDetails.age));
+                    weightField.setText(String.valueOf(userDetails.weight));
                 }
-                else {
-                    genderGroupField.check(R.id.female);
-                }
-                ageField.setText(String.valueOf(userDetails.age));
-                weightField.setText(String.valueOf(userDetails.weight));
+
             }
 
             @Override
