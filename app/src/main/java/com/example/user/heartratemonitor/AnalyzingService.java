@@ -11,11 +11,6 @@ import java.util.Date;
 
 
 public class AnalyzingService extends IntentService {
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
     private int restTimeAVG;
     private int workingAVG;
     private int varient;

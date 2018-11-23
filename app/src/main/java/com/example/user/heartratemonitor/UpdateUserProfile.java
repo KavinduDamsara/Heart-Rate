@@ -61,7 +61,6 @@ public class UpdateUserProfile extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserDetails userDetails = dataSnapshot.getValue(UserDetails.class);
-                //System.out.println(userDetails);
                 if(userDetails != null){
                     firstNameField.setText(userDetails.firstName);
                     lastNameField.setText(userDetails.lastName);
@@ -110,14 +109,12 @@ public class UpdateUserProfile extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
- //                           Toast.makeText(UpdateUserProfile.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }else{
                             //un successful message
                             Toast.makeText(UpdateUserProfile.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-        //userDetsilsDB.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
     }
 }

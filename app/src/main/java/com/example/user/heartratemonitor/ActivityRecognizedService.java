@@ -83,13 +83,6 @@ public class ActivityRecognizedService extends IntentService{
                 }
                 case DetectedActivity.WALKING: {
                     Log.e( "ActivityRecognition", "Walking: " + activity.getConfidence() );
-//                    if( activity.getConfidence() >= 75 ) {
-//                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-//                        builder.setContentText( "Are you walking?" );
-//                        builder.setSmallIcon( R.mipmap.ic_launcher );
-//                        builder.setContentTitle( getString( R.string.app_name ) );
-//                        NotificationManagerCompat.from(this).notify(0, builder.build());
-//                    }
                     sendMessage("Walking",activity.getConfidence());
                     break;
                 }
@@ -106,7 +99,6 @@ public class ActivityRecognizedService extends IntentService{
     }
 
     private void sendMessage(String message, int confidence) {
-        // send message only if the confidence level is above 75
         Intent intent = new Intent(Constants.INTENT_FILTER);
 
         if(confidence >= 75) {
@@ -122,10 +114,6 @@ public class ActivityRecognizedService extends IntentService{
 
         logThis("List size:"+activityRecPoints.size());
     }
-
-
-
-
 
     private void logThis(String s){
         Log.d(ActivityRecognizedService.class.getSimpleName(),s);

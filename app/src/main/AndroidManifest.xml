@@ -39,10 +39,6 @@
         </service>
         -->
         <activity
-            android:name=".DashBoard"
-            android:label="@string/title_activity_dash_board"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".NavActivity"
             android:label="@string/heart_rate_monitor"
             android:theme="@style/AppTheme.NoActionBar">
@@ -52,15 +48,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserAction" />
 
         <service
             android:name=".ActivityRecognizedService"
             android:exported="false" />
 
         <activity android:name=".DeviceListActivity" />
-        <activity android:name=".BlueTooth" />
-        <activity android:name=".CombinedActivity" />
         <activity android:name=".UpdateUserProfile"></activity>
     </application>
 
